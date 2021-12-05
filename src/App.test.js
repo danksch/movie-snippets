@@ -1,8 +1,33 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, fireEvent } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("testing App", () => {
+  beforeEach(() => {
+    fetch.resetMocks();
+  });
+
+  it("renders error component with custom API message when result message is not empty", async () => {
+    const resultMessage = "This is a custom result message from the API.";
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        resultMessage,
+      })
+    );
+
+    render(<App />);
+    fireEvent.change(screen.getByLabelText("Look up movie"), { target: { value: "42" } });
+    fireEvent.click(screen.getByText("Search"));
+
+    expect(await screen.findByText(resultMessage)).toBeInTheDocument();
+  });
+
+  it("renders error component with fixed error message when API call throws error", async () => {
+    fetch.mockRejectOnce();
+
+    render(<App/>);
+    fireEvent.change(screen.getByLabelText("Look up movie"), { target: { value: "42" } });
+    fireEvent.click(screen.getByText("Search"));
+
+    expect(await screen.findByText("An error occurred while fetching")).toBeInTheDocument();
+  });
 });
