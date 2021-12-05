@@ -7,10 +7,10 @@ describe("testing App", () => {
   });
 
   it("renders error component with custom API message when result message is not empty", async () => {
-    const resultMessage = "This is a custom result message from the API.";
+    const errorMessage = "This is a custom result message from the API.";
     fetch.mockResponseOnce(
       JSON.stringify({
-        resultMessage,
+        errorMessage,
       })
     );
 
@@ -18,7 +18,7 @@ describe("testing App", () => {
     fireEvent.change(screen.getByLabelText("Look up movie"), { target: { value: "42" } });
     fireEvent.click(screen.getByText("Search"));
 
-    expect(await screen.findByText(resultMessage)).toBeInTheDocument();
+    expect(await screen.findByText(errorMessage)).toBeInTheDocument();
   });
 
   it("renders error component with fixed error message when API call throws error", async () => {

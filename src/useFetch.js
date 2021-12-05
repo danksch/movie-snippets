@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 
-export const useFetch = (initUrl, initData) => {
+export const useFetch = (initUrl, initData) => {console.log(initUrl)
   const [url, setUrl] = useState(initUrl);
   const [state, dispatch] = useReducer(fetchReducer, {
     isLoading: false,
@@ -9,9 +9,7 @@ export const useFetch = (initUrl, initData) => {
   });
 
   useEffect(() => {
-    if (!url) {
-      return;
-    }
+    if (!url) return;
 
     let aborted = false;
     const controller = new AbortController();

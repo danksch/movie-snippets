@@ -7,6 +7,9 @@ class Api {
   static searchSeries(query) {
     return `https://imdb-api.com/en/API/SearchSeries/${API_KEY}/${query}`;
   }
+  static getRating(id) {
+    return `https://imdb-api.com/en/API/Ratings/${API_KEY}/${id}`;
+  }
 }
 
 export default Api;

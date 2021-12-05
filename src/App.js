@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { useFetch } from "./useFetch";
-import { Form, Button, CardGroup } from "react-bootstrap";
+import { Form, Button, CardGroup, Alert, Badge } from "react-bootstrap";
 import styled from "styled-components";
 import Api from "./Api";
 import MovieEntry from "./MovieEntry";
@@ -11,20 +11,21 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [{ data, isLoading, isError }, doFetch] = useFetch("", {
     results: [],
-    resultMessage: "",
+    errorMessage: "",
   });
 
   return (
     <StyledApp>
-      <h1>Movie Snippets</h1>
+      <h1>Movie Snippets <Badge bg='secondary' pill>powered by IMDb API</Badge></h1>
       <Form
+        className="mb-5"
         onSubmit={(e) => {
           doFetch(isMovies ? Api.searchMovie(query) : Api.searchSeries(query));
           e.preventDefault();
         }}
       >
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="input-query">Look up movie</Form.Label>
+          <Form.Label htmlFor="input-query">Title</Form.Label>
           <Form.Control
             id="input-query"
             autoFocus
@@ -56,13 +57,13 @@ const App = () => {
         </Button>
       </Form>
       {!isLoading && data.results && (
-        <CardGroup className="mt-5">
-          {data.results.map(({ id, ...movie }) => (
-            <MovieEntry key={id} {...movie} />
+        <CardGroup>
+          {data.results.map((movie) => (
+            <MovieEntry key={movie.id} {...movie} />
           ))}
         </CardGroup>
       )}
-      <FetchError isError={isError} resultMessage={data.resultMessage} />
+      <FetchError isError={isError} errorMessage={data.errorMessage} />
     </StyledApp>
   );
 };
@@ -77,9 +78,11 @@ const StyledApp = styled.div`
   flex-direction: column;
 `;
 
-const FetchError = ({ isError, resultMessage }) => {
-  return !isError && !resultMessage ? null : (
-    <p>{resultMessage || "An error occurred while fetching"}</p>
+const FetchError = ({ isError, errorMessage }) => {
+  return !isError && !errorMessage ? null : (
+    <Alert variant="danger">
+      {errorMessage || "An error occurred while fetching"}
+    </Alert>
   );
 };
 
