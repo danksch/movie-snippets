@@ -19,6 +19,11 @@ const MovieEntry = ({ id, image, title, description }) => {
     <Card border="light" className="bg-dark text-white mb-3">
       <Card.Img
         variant="top"
+        /* 
+          Pass the actual poster url from the imdb api as an URL query parameter to the weserv backend
+          for smaller images and less loading time, 
+          where 'h' is height parameter (ratio is kept) and 'q' quality parameter.
+        */
         src={`//images.weserv.nl/?url=${image}&h=200&q=90`}
         alt="Movie poster"
         loading="lazy"
