@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 
-export const useFetch = (initUrl, initData) => {console.log(initUrl)
+export const useFetch = (initUrl, initData) => {
   const [url, setUrl] = useState(initUrl);
   const [state, dispatch] = useReducer(fetchReducer, {
     isLoading: false,
