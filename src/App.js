@@ -1,13 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { useFetch } from "./useFetch";
-import { Form, Button, CardGroup, Alert, Badge } from "react-bootstrap";
+import { Form, Button, CardGroup, Alert } from "react-bootstrap";
 import styled from "styled-components";
 import Api from "./Api";
 import MovieEntry from "./MovieEntry";
 
 const App = () => {
-  const [isMovies, setIsMovies] = useState(true);
+  const [isMovie, setIsMovie] = useState(true);
   const [query, setQuery] = useState("");
   const [{ data, isLoading, isError }, doFetch] = useFetch("", {
     results: [],
@@ -16,11 +16,11 @@ const App = () => {
 
   return (
     <StyledApp>
-      <h1>Movie Snippets <Badge bg='secondary' pill>powered by IMDb API</Badge></h1>
+      <h1>Movie Snippets</h1>
       <Form
         className="mb-5"
         onSubmit={(e) => {
-          doFetch(isMovies ? Api.searchMovie(query) : Api.searchSeries(query));
+          doFetch(isMovie ? Api.searchMovie(query) : Api.searchSeries(query));
           e.preventDefault();
         }}
       >
@@ -39,17 +39,17 @@ const App = () => {
         <Form.Group className="mb-3">
           <Form.Check
             type="radio"
-            id="radio-movies"
-            label="Movies"
-            checked={isMovies}
-            onChange={() => setIsMovies(true)}
+            id="radio-movie"
+            label="Movie"
+            checked={isMovie}
+            onChange={() => setIsMovie(true)}
           />
           <Form.Check
             type="radio"
             id="radio-series"
             label="Series"
-            checked={!isMovies}
-            onChange={() => setIsMovies(false)}
+            checked={!isMovie}
+            onChange={() => setIsMovie(false)}
           />
         </Form.Group>
         <Button variant="primary" type="submit" disabled={!query || isLoading}>
@@ -64,6 +64,7 @@ const App = () => {
         </CardGroup>
       )}
       <FetchError isError={isError} errorMessage={data.errorMessage} />
+      <ApiHintContainer>powered by IMDb API</ApiHintContainer>
     </StyledApp>
   );
 };
@@ -85,5 +86,13 @@ const FetchError = ({ isError, errorMessage }) => {
     </Alert>
   );
 };
+
+const ApiHintContainer = styled.div`
+  position: absolute;
+  bottom: 5px;
+  color: lightgrey;
+  opacity: .8;
+  font-size: .8em;
+`;
 
 export default App;
