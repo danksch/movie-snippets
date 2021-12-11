@@ -15,7 +15,9 @@ describe("testing App", () => {
     );
 
     render(<App />);
-    fireEvent.change(screen.getByLabelText("Look up movie"), { target: { value: "42" } });
+    fireEvent.change(screen.getByLabelText("Title"), {
+      target: { value: "42" },
+    });
     fireEvent.click(screen.getByText("Search"));
 
     expect(await screen.findByText(errorMessage)).toBeInTheDocument();
@@ -24,10 +26,14 @@ describe("testing App", () => {
   it("renders error component with fixed error message when API call throws error", async () => {
     fetch.mockRejectOnce();
 
-    render(<App/>);
-    fireEvent.change(screen.getByLabelText("Look up movie"), { target: { value: "42" } });
+    render(<App />);
+    fireEvent.change(screen.getByLabelText("Title"), {
+      target: { value: "42" },
+    });
     fireEvent.click(screen.getByText("Search"));
 
-    expect(await screen.findByText("An error occurred while fetching")).toBeInTheDocument();
+    expect(
+      await screen.findByText("An error occurred while fetching")
+    ).toBeInTheDocument();
   });
 });

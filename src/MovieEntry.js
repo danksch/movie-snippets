@@ -24,7 +24,7 @@ const MovieEntry = ({ id, image, title, description }) => {
           for smaller images and less loading time, 
           where 'h' is height parameter (ratio is kept) and 'q' quality parameter.
         */
-        src={`//images.weserv.nl/?url=${image}&h=200&q=90`}
+        src={image ? `//images.weserv.nl/?url=${image}&h=200&q=90` : ""}
         alt="Movie poster"
         loading="lazy"
       />
@@ -41,11 +41,11 @@ const MovieEntry = ({ id, image, title, description }) => {
   );
 };
 
-const Rating = ({ value }) => {
+export const Rating = ({ value }) => {
   return value ? (
     <>
       {value}&nbsp;
-      <FontAwesomeIcon icon={faStar} color="yellow" />
+      <FontAwesomeIcon icon={faStar} color="yellow" data-testid="star-icon" />
     </>
   ) : null;
 };

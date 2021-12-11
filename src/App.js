@@ -79,6 +79,12 @@ const StyledApp = styled.div`
   flex-direction: column;
 `;
 
+/* 
+  isError represents actual error responses (status 400, 500), 
+  while the errorMessage prop gets set in the api response in a 200 response
+  under specific circumstances (e.g.: limit of the daily allowed queries to the api
+  has been reached)
+*/
 const FetchError = ({ isError, errorMessage }) => {
   return !isError && !errorMessage ? null : (
     <Alert variant="danger">
@@ -91,8 +97,8 @@ const ApiHintContainer = styled.div`
   position: absolute;
   bottom: 5px;
   color: lightgrey;
-  opacity: .8;
-  font-size: .8em;
+  opacity: 0.8;
+  font-size: 0.8em;
 `;
 
 export default App;
