@@ -6,9 +6,11 @@ describe("testing MovieEntry", () => {
     fetch.resetMocks();
   });
 it('renders component correctly when props are passed', () => {
-    fetch.mockResponseOnce(JSON.stringify({ imDb: '7' }));
+  const score = '7';
+    fetch.mockResponseOnce(JSON.stringify({ imDb: score }));
 
     render(<MovieEntry />);
+    expect(screen.getByText(score)).toBeInTheDocument();
 })
 });
 
