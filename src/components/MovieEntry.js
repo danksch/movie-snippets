@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Card, Spinner } from "react-bootstrap";
-import Api from "./Api";
-import { useFetch } from "./useFetch";
+import Api from "../api/Api";
+import { useFetch } from "../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 

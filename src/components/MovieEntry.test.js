@@ -5,13 +5,18 @@ describe("testing MovieEntry", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
-it('renders component correctly when props are passed', () => {
-  const score = '7';
+  it("renders component correctly when props are passed", async () => {
+    const score = "7";
+    const movie = {
+      id: 3,
+      image: "",
+      title: "Batman",
+      description: "Just a Batman movie",
+    };
     fetch.mockResponseOnce(JSON.stringify({ imDb: score }));
-
-    render(<MovieEntry />);
-    expect(screen.getByText(score)).toBeInTheDocument();
-})
+    render(<MovieEntry {...movie} />);
+    expect(await screen.findByText(score)).toBeInTheDocument();
+  });
 });
 
 describe("testing Rating", () => {

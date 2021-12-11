@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { useFetch } from "./useFetch";
+import { useFetch } from "../hooks/useFetch";
 import { Form, Button, CardGroup, Alert } from "react-bootstrap";
 import styled from "styled-components";
-import Api from "./Api";
+import Api from "../api/Api";
 import MovieEntry from "./MovieEntry";
 
 const App = () => {
