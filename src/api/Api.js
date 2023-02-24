@@ -1,8 +1,3 @@
-/* 
-  Obviously, in a secure environment this key and the actual API calls 
-  should be stored on a node / express server and be invisible 
-  to the front-end client.
-*/
 const API_KEY = "k_9omwph2w";
 
 class Api {
