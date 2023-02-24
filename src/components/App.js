@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
-import { Form, Button, CardGroup, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import Api from "../api/Api";
 import MovieEntry from "./MovieEntry";
@@ -57,11 +57,15 @@ const App = () => {
         </Button>
       </Form>
       {!isLoading && data.results && (
-        <CardGroup>
-          {data.results.map((movie) => (
-            <MovieEntry key={movie.id} {...movie} />
-          ))}
-        </CardGroup>
+        <Container fluid>
+          <Row xs={1} sm={3} md={5} className="g-4">
+            {data.results.map((movie) => (
+              <Col>
+              <MovieEntry key={movie.id} {...movie} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
       )}
       <FetchError isError={isError} errorMessage={data.errorMessage} />
       <ApiHintContainer>powered by IMDb API</ApiHintContainer>
@@ -94,7 +98,7 @@ const FetchError = ({ isError, errorMessage }) => {
 };
 
 const ApiHintContainer = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 5px;
   color: lightgrey;
   opacity: 0.8;
